@@ -24,6 +24,13 @@ export default class Home extends Component {
           Incrementar
         </button>
 
+        <form >
+          <input type="text" />
+          <input type="password" name="" id="" />
+          <input type="email" name="" id="" />
+          <button type="submit">Enviar</button>
+        </form>
+
         <ul>
           {this.state.frutas.map((fruta, index) => (
             <Card title={fruta} key={index} />
