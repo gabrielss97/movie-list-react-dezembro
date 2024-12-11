@@ -16,10 +16,6 @@ export default class Home extends Component {
     document.title = `sua contagem é ${this.state.count}`;
   }
 
-  componentWillUnmount() {
-    console.log("pagina desmontada");
-  }
-
   render() {
     return (
       <div>
