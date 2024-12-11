@@ -31,6 +31,10 @@ export default class Home extends Component {
           <button type="submit">Enviar</button>
         </form>
 
+        <div className="calculadora">
+          {/* CALCULADORA AQUI */}
+        </div>
+
         <ul>
           {this.state.frutas.map((fruta, index) => (
             <Card title={fruta} key={index} />
