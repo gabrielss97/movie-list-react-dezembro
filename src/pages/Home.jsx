@@ -1,46 +1,42 @@
-import Card from "../components/Card";
+import { useEffect, useState } from "react";
+import movieService from "../api/movieService.js";
+import MovieCard from "../components/MovieCard.jsx";
+import Header from "../components/Header.jsx";
+import { Container, Row } from "react-bootstrap";
 
-import { Component } from "react";
+export default function Home() {
+  const [movies, setMovies] = useState([]);
 
-export default class Home extends Component {
-  state = {
-    count: 0,
-    frutas: ["maça", "pera", "uva", "abacaxi"],
-  };
+  async function getMovies() {
+    const {
+      data: { results },
+    } = await movieService.getMovies();
 
-  componentDidMount() {
-    document.title = `sua contagem é ${this.state.count}`;
+    setMovies(results);
   }
 
-  componentDidUpdate() {
-    document.title = `sua contagem é ${this.state.count}`;
+  async function getMoviesSearch(movieName) {
+    const {
+      data: { results },
+    } = await movieService.getMoviesSearch(movieName);
+    setMovies(results);
   }
 
-  render() {
-    return (
-      <div>
-        <p>sua contagem é {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-          Incrementar
-        </button>
+  useEffect(() => {
+    getMovies();
+  }, []);
 
-        <form >
-          <input type="text" />
-          <input type="password" name="" id="" />
-          <input type="email" name="" id="" />
-          <button type="submit">Enviar</button>
-        </form>
-
-        <div className="calculadora">
-          {/* CALCULADORA AQUI */}
-        </div>
-
-        <ul>
-          {this.state.frutas.map((fruta, index) => (
-            <Card title={fruta} key={index} />
+  // depois do retorno do html nada pode acontecer
+  return (
+    <div>
+      <Header getMoviesSearch={getMoviesSearch} getMovies={getMovies} />
+      <Container className="pt-5 pb-5">
+        <Row className="gap-5">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} key={movie.id} />
           ))}
-        </ul>
-      </div>
-    );
-  }
+        </Row>
+      </Container>
+    </div>
+  );
 }
